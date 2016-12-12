@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MiniCactpotSolver
 {
-    public partial class Form1 : Form
+    public partial class formMiniCact : Form
     {
-        public Form1()
+        public formMiniCact()
         {
             InitializeComponent();
         }

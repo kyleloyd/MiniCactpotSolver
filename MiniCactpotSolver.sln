@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniCactpotSolver", "MiniCactpotSolver\MiniCactpotSolver.csproj", "{D57BA128-EDE5-4A96-AEE1-68F1C06A5718}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyInterface", "EasyInterface\EasyInterface.csproj", "{990CE70A-648E-47E8-9ABC-C6CB814775C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solver", "Solver\Solver.csproj", "{18C6B097-A34B-4674-8B14-FC4B4B89BC25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D57BA128-EDE5-4A96-AEE1-68F1C06A5718}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D57BA128-EDE5-4A96-AEE1-68F1C06A5718}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D57BA128-EDE5-4A96-AEE1-68F1C06A5718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{990CE70A-648E-47E8-9ABC-C6CB814775C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{990CE70A-648E-47E8-9ABC-C6CB814775C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{990CE70A-648E-47E8-9ABC-C6CB814775C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{990CE70A-648E-47E8-9ABC-C6CB814775C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18C6B097-A34B-4674-8B14-FC4B4B89BC25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18C6B097-A34B-4674-8B14-FC4B4B89BC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18C6B097-A34B-4674-8B14-FC4B4B89BC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18C6B097-A34B-4674-8B14-FC4B4B89BC25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
