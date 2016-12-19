@@ -8,7 +8,7 @@ namespace Solver
 {
     public class Solution
     {
-        public Selection MaximumOutput { get; set; }
+        public Selection MaximumValue { get; set; }
         public Selection MaximumAverage { get; set; }
 
         private List<int> _remainingNumbers;
@@ -54,7 +54,10 @@ namespace Solver
 
         public Solution(List<int> values)
         {
+            //A list containing the numbers that have not been uncovered
             _remainingNumbers = new List<int>();
+
+            //Adds numbers that have not already been uncovered to _remainingNumbers
             for (var counter = 1; counter <= 9; counter++)
             {
                 if (!values.Contains(counter))
@@ -63,42 +66,51 @@ namespace Solver
                 }
             }
 
+            //A list containing all possible selections for the provided game board
             var selections = new List<Selection>();
 
-            selections.Add(_rowOne = new Selection(new List<int>() { values[0], values[1], values[2] }));
-            selections.Add(_rowTwo = new Selection(new List<int>() { values[3], values[4], values[5] }));
-            selections.Add(_rowThree = new Selection(new List<int>() { values[6], values[7], values[8] }));
+            selections.Add(_rowOne = new Selection(new List<int>() { values[0], values[1], values[2] }, "Top Row"));
+            selections.Add(_rowTwo = new Selection(new List<int>() { values[3], values[4], values[5] }, "Center Row"));
+            selections.Add(_rowThree = new Selection(new List<int>() { values[6], values[7], values[8] }, "Bottom Row"));
 
-            selections.Add(_columnOne = new Selection(new List<int>() { values[0], values[3], values[6] }));
-            selections.Add(_columnTwo = new Selection(new List<int>() { values[1], values[4], values[7] }));
-            selections.Add(_columnThree = new Selection(new List<int>() { values[2], values[5], values[8] }));
+            selections.Add(_columnOne = new Selection(new List<int>() { values[0], values[3], values[6] }, "Left Column"));
+            selections.Add(_columnTwo = new Selection(new List<int>() { values[1], values[4], values[7] }, "Center Column") );
+            selections.Add(_columnThree = new Selection(new List<int>() { values[2], values[5], values[8] }, "Right Column"));
 
-            selections.Add(_topLeftToBottomRight = new Selection(new List<int>() { values[0], values[4], values[8] }));
-            selections.Add(_topRightToBottomLeft = new Selection(new List<int>() { values[2], values[4], values[6] }));
+            selections.Add(_topLeftToBottomRight = new Selection(new List<int>() { values[0], values[4], values[8] }, "Top-Left to Bottom-Right Diagonal"));
+            selections.Add(_topRightToBottomLeft = new Selection(new List<int>() { values[2], values[4], values[6] }, "Top-Right to Bottom-Left Diagonal"));
 
-            foreach (var selection in selections)
+            foreach (var current in selections)
             {
-                switch (selection.NumberOfEmpty)
+                switch (current.NumberOfEmpty)
                 {
                     case 1:
-                        GetPossibleRewardsForOneMissing(selection);
+                        GetPossibleRewardsForOneMissing(current);
                         break;
                     case 2:
-                        GetPossibleRewardsForTwoMissing(selection);
+                        GetPossibleRewardsForTwoMissing(current);
                         break;
                     case 3:
-                        selection.MinimumValue = 36;
-                        selection.MaximumValue = 10000;
-                        selection.Average = 1010;
+                        GetPossibleRewardsForThreeMissing(current);
                         break;
                     default:
+                        GetPossibleRewardsForZeroMissing(current);
                         break;
                 }
+
+                CalculateAdditionalSelectionValues(current);
             }
 
-            MaximumOutput = selections.Where(x => x.MaximumValue == selections.Max(y => y.MaximumValue)).First();
+            MaximumValue = selections.Where(x => x.MaximumValue == selections.Max(y => y.MaximumValue)).First();
             MaximumAverage = selections.Where(x => x.Average == selections.Max(y => y.Average)).First();
             var minValues = new List<int>(selections.Select(x => x.MinimumValue));
+        }
+
+        private void GetPossibleRewardsForZeroMissing(Selection current)
+        {
+            var selectionSum = current.Values.Sum();
+            current.PossibleSums.Add(selectionSum);
+            current.MaximumValue = current.Average = current.MinimumValue = _rewards[selectionSum];
         }
 
         private void GetPossibleRewardsForOneMissing(Selection current)
@@ -111,8 +123,6 @@ namespace Solver
                     current.PossibleSums.Add(counter + currentSum);
                 }
             }
-
-            CalculateAdditionalSelectionValues(current);
         }
 
         private void GetPossibleRewardsForTwoMissing(Selection current)
@@ -131,8 +141,29 @@ namespace Solver
                     }
                 }
             }
+        }
 
-            CalculateAdditionalSelectionValues(current);            
+        private void GetPossibleRewardsForThreeMissing(Selection current)
+        {
+            for (var firstNumber = 1; firstNumber <= 9; firstNumber++)
+            {
+                if (_remainingNumbers.Contains(firstNumber))
+                {
+                    for (var secondNumber = 1; secondNumber <= 9; secondNumber++)
+                    {
+                        if (_remainingNumbers.Contains(secondNumber) && secondNumber != firstNumber)
+                        {
+                            for (var thirdNumber = 1; thirdNumber <= 9; thirdNumber++)
+                            {
+                                if (_remainingNumbers.Contains(thirdNumber) && thirdNumber != firstNumber && thirdNumber != secondNumber)
+                                {
+                                    current.PossibleSums.Add(firstNumber + secondNumber + thirdNumber);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void CalculateAdditionalSelectionValues(Selection current)

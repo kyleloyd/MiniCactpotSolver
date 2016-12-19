@@ -10,6 +10,7 @@ namespace Solver
     {
         public List<int> Values { get; set; }
         public int NumberOfEmpty { get; set; }
+        public string SelectionName { get; set; }
 
         public List<int> PossibleSums { get; set; }
 
@@ -20,7 +21,7 @@ namespace Solver
         //To Be Used Later
         public string RiskLevel { get; set; }
 
-        public Selection(List<int> values)
+        public Selection(List<int> values, string name)
         {
             NumberOfEmpty = 0;
             foreach(var digit in values)
@@ -36,6 +37,8 @@ namespace Solver
             MinimumValue = 0;
             MaximumValue = 0;
             Average = 0;
+
+            SelectionName = name;
         }
     }
 }

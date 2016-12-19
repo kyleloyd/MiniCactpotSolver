@@ -27,6 +27,11 @@ namespace EasyInterface
             }
 
             var solution = new Solution(values);
+
+            Console.WriteLine($"\nSelection with highest reward: {solution.MaximumValue.SelectionName}");
+            Console.WriteLine($"Selection with highest average reward: {solution.MaximumAverage.SelectionName}");
+
+            Console.ReadKey();
         }
 
         private static bool GenerateValueList(ref List<int> values)
@@ -56,7 +61,7 @@ namespace EasyInterface
                     return false;
                 }
 
-                if (values.Contains(result) || intsToAdd.Contains(result))
+                if ((values.Contains(result) || intsToAdd.Contains(result)) && result != 0)
                 {
                     Console.WriteLine("Duplicate entry, try again!\n");
                     return false;
